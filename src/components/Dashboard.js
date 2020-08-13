@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Dashboard = () => {
+const Dashboard = props => {
     return (
         <div>
             <h1>Dashboard</h1>
             <p>Secret Page</p>
-            <button>Log Out</button>
+            <button onClick={props.handleLogout}>Log Out</button>
         </div>
     )
 };

@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import Login from './Login';
+
 const Landing = props => {
-    return (
-        <div>
-            <h1>Landing</h1>
-            <p><Link to='/dashboard'>View Dashboard</Link></p>
-            <p>Logged in status: {props.user}</p>
-            <button onClick={props.handleLogin}>Log In</button>
-        </div>
-    )
+
+    const [target, setTarget] = useState(props.match.params.target);
+    const [client, setClient] = useState({'name': props.match.params.client});
+
+    console.log('props.match', props.match);
+    console.log('client', client);
+
+    return (<Login client={client}/>);
 };
 
 export default Landing;
