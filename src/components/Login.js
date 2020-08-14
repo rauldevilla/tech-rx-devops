@@ -7,10 +7,12 @@ import { Button } from 'react-bootstrap';
 
 import './Login.css';
 
+import { validateSessionId } from './Functions';
+
 const Login = props => {
 
-    const [client, setClient] = useState(props.client);
     const [validated, setValidated] = useState(false);
+    const clientName = props.match.params.client;
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
@@ -18,20 +20,39 @@ const Login = props => {
             event.preventDefault();
             event.stopPropagation();
         } else {
-            props.history.push("/survey");
+            console.log('pre-validating...');
+            var number = Math.floor(Math.random() * 10);
+            validateSessionId(number, 
+                () => {
+                    console.log('onSuccess');
+                    props.history.push("/survey/123456789");
+                },
+                () => {
+                    console.log('onError');
+                }
+            );
         }
 
         setValidated(true);
     }
 
+    /*const validateSession = () => {
+        var number = Math.floor(Math.random() * 10);
+        console.log('number', number);
+        fetch('http://numbersapi.com/' + number)
+          .then(response => {
+            console.log('response', response);
+            response.text().then((text) => {
+              console.log('body', text);
+              props.history.push("/survey/123456789");
+            });
+          });
+    }*/
+
     return (
         <div>
             <Container>
-                <Row>
-                    <Col>
-                        <h2>DevOps assessment for <pre className="client-name">{client.name}</pre></h2>
-                    </Col>
-                </Row>
+                <h2>DevOps assessment for <pre className="client-name">{clientName}</pre></h2>
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
                     <Form.Group>
                         <Form.Label>Your business email</Form.Label>

@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Landing from './components/Landing';
 import ProtectedRoute from './components/ProtectedRoute';
 import Survey from './components/Survey';
+import Login from './components/Login';
 import Unauthorized from './components/Unauthorized';
 
 function App() {
@@ -46,7 +47,7 @@ function App() {
     <div className="App">
       <Router>
         <Route exact path='/survey/:id' render={props => <Survey {...props} user={user} />} />
-        <Route exact path='/assessment/:client' render={props => <Landing {...props} user={user} createSession={createSession} handleLogin={handleLogin}/>} />
+        <Route exact path='/assessment/:client' render={props => <Login {...props}/>} />
       </Router>
     </div>
   );
