@@ -3,18 +3,18 @@ import './App.css';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Landing from './components/Landing';
+import ProtectedRoute from './components/ProtectedRoute';
+import Survey from './components/Survey';
 import Unauthorized from './components/Unauthorized';
 
 function App() {
   const [user, setUser] = useState(false);
 
-  /*
   const handleLogin = e => {
     console.log('setUser');
     e.preventDefault();
     setUser(true);
   }
-  */
 
   const handleLogout = e => {
     e.preventDefault();
@@ -45,24 +45,11 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Route exact path='/:target/:client' render={props => <Landing {...props} user={user} createSession={createSession} />} />
-        <Route exact path='/' component={Unauthorized} />
+        <Route exact path='/survey/:id' render={props => <Survey {...props} user={user} />} />
+        <Route exact path='/assessment/:client' render={props => <Landing {...props} user={user} createSession={createSession} handleLogin={handleLogin}/>} />
       </Router>
     </div>
   );
-
-  /*
-  return (
-    <div className="App">
-      <Router>
-        <Route exact path='/:whereTo/:id' render={props => <Landing {...props} user={user} createSession={createSession} />} />
-        <ProtectedRoute exact path='/dashboard' user={user} handleLogout={handleLogout} component={Dashboard} />
-        <Route exact path='/unauthorized' component={Unauthorized} />
-      </Router>
-    </div>
-  );
-  */
-
 
 }
 

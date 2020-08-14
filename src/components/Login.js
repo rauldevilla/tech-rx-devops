@@ -5,6 +5,8 @@ import Col from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import { Button } from 'react-bootstrap';
 
+import './Login.css';
+
 const Login = props => {
 
     const [client, setClient] = useState(props.client);
@@ -12,9 +14,11 @@ const Login = props => {
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
-        if (form.checkValidity() === false) {
+        if (!form.checkValidity()) {
             event.preventDefault();
             event.stopPropagation();
+        } else {
+            props.history.push("/survey");
         }
 
         setValidated(true);
@@ -25,7 +29,7 @@ const Login = props => {
             <Container>
                 <Row>
                     <Col>
-                        <h2>DevOps assessment for {client.name}</h2>
+                        <h2>DevOps assessment for <pre className="client-name">{client.name}</pre></h2>
                     </Col>
                 </Row>
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
