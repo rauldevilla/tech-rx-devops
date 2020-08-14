@@ -3,6 +3,7 @@ import './App.css';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Landing from './components/Landing';
+import Unauthorized from './components/Unauthorized';
 
 function App() {
   const [user, setUser] = useState(false);
@@ -45,6 +46,7 @@ function App() {
     <div className="App">
       <Router>
         <Route exact path='/:target/:client' render={props => <Landing {...props} user={user} createSession={createSession} />} />
+        <Route exact path='/' component={Unauthorized} />
       </Router>
     </div>
   );
