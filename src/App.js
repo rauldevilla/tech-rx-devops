@@ -46,6 +46,7 @@ function App() {
   return (
     <div className="App">
       <Router>
+        <Route exact path='/' render={props => <Landing {...props}/>}/>
         <Route exact path='/survey/:id' render={props => <Survey {...props} user={user} />} />
         <Route exact path='/assessment/:client' render={props => <Login {...props}/>} />
       </Router>

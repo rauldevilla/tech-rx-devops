@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Form';
-import Col from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import { Button } from 'react-bootstrap';
+
+import {ORGANIZATION_ROLES} from './Constants';
 
 import './Login.css';
 
@@ -71,32 +71,19 @@ const Login = props => {
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>First name</Form.Label>
-                        <Form.Control required type="text" placeholder="Name" />
+                        <Form.Control required onChange={(event) => loginInformation.firstName = event.currentTarget.value} type="text" placeholder="Name" />
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Last name</Form.Label>
-                        <Form.Control required type="text" placeholder="Last Name" />
+                        <Form.Control required onChange={(event) => loginInformation.lastName = event.currentTarget.value} type="text" placeholder="Last Name" />
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>What is your role in the organization?</Form.Label>
-                        <Form.Control required as="select">
-                            <option></option>
-                            <option>Business Directive</option>
-                            <option>Business Sponsor</option>
-                            <option>Business Architect</option>
-                            <option>Business Analyst</option>
-                            <option>Digital Transformation Directive</option>
-                            <option>Digital Transformation Sponsor</option>
-                            <option>Digital Transformation Analyst</option>
-                            <option>Product Owner</option>
-                            <option>IT Directive</option>
-                            <option>IT Analyst</option>
-                            <option>IT Architect</option>
-                            <option>IT Development</option>
-                            <option>IT Operations</option>
-                            <option>IT DevOps</option>
-                            <option>IT Outsourcing</option>
-                            <option>IT Consultant</option>
+                        <Form.Control required onChange={(event) => loginInformation.role = event.currentTarget.value} as="select">
+                            <option>-- Select --</option>
+                            {ORGANIZATION_ROLES.map((e, key) => {
+                                return <option key={key}>{e.name}</option>;
+                            })}
                             <option>Other</option>
                         </Form.Control>
                     </Form.Group>
