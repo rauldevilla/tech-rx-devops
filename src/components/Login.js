@@ -7,11 +7,13 @@ import { Button } from 'react-bootstrap';
 
 import './Login.css';
 
-import { validateSessionId } from './Functions';
+import { saveLoginInformation } from './Functions';
 
 const Login = props => {
 
     const [validated, setValidated] = useState(false);
+    const [loginInformation, setLoginInformation] = useState({});
+
     const clientName = props.match.params.client;
 
     const handleSubmit = (event) => {
@@ -22,7 +24,8 @@ const Login = props => {
         } else {
             console.log('pre-validating...');
             var number = Math.floor(Math.random() * 10);
-            validateSessionId(number, 
+            console.log('loginInformation', loginInformation);
+            saveLoginInformation(number, 
                 () => {
                     console.log('onSuccess');
                     props.history.push("/survey/123456789");
@@ -49,6 +52,11 @@ const Login = props => {
           });
     }*/
 
+    const handleOnChange = (event) => {
+        console.log('handleOnChange.event', event);
+        console.log('handleOnChange.event.currentTarget.value', event.currentTarget.value);
+    }
+
     return (
         <div>
             <Container>
@@ -56,7 +64,7 @@ const Login = props => {
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
                     <Form.Group>
                         <Form.Label>Your business email</Form.Label>
-                        <Form.Control required type="email" placeholder="Enter email" />
+                        <Form.Control required onChange={(event) => loginInformation.email = event.currentTarget.value} type="email" placeholder="Enter email" />
                         <Form.Text className="text-muted">
                             We'll never share your email with anyone else.
                         </Form.Text>
