@@ -1,4 +1,4 @@
-import { SURVEY_QUESTIONS } from './Constants';
+import { SURVEY } from './Constants';
 
 export const saveLoginInformation = (loginInformation, onSuccess, onError) => {
     
@@ -33,7 +33,7 @@ export const getSurveyQuestions = (surveyId, onSuccess, onError) => {
     //fetch("http://.....")
     //.then((response) => {
         delay(3000);
-        onSuccess(SURVEY_QUESTIONS);
+        onSuccess(SURVEY);
     //}).error((error) => {
     //    onError(error);
     //});

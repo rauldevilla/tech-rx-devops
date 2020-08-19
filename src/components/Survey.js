@@ -3,6 +3,7 @@ import Unauthorized from './Unauthorized';
 import Spinner from 'react-bootstrap/Spinner';
 
 import { getSurveyQuestions } from '../functions/Functions';
+import { Card, Accordion, Button } from 'react-bootstrap';
 
 class Survey extends Component {
 
@@ -10,7 +11,7 @@ class Survey extends Component {
         super(props);
         this.state = {
             surveyId: props.match.params.id,
-            surveyQuestions: []
+            survey: {}
         }
     }
 
@@ -19,29 +20,52 @@ class Survey extends Component {
     }
 
     isLoadingQuestions = () => {
-        return this.state.surveyQuestions.length === 0;
+        return this.state.survey.survey === undefined;
     }
 
     componentDidMount = () => {
         getSurveyQuestions(this.state.surveyId,
-        (questions) => {
-            this.setState({surveyQuestions: questions});
+        (survey) => {
+            this.setState({survey: survey});
         },
         (error) => {
             console.error(error);
         })
     }
 
+    surveyHasQuestions = () => {
+        return this.state.survey.survey !== undefined && this.state.survey.survey.length > 0;
+    }
+
+    formatSurveyQuestion = (question, key) => {
+        return <div style={{background: (key % 2 === 0 ? "#f5fffe" : ""), marginBottom: "10px", padding: "10px"}}>{question.text}</div>;
+    }
+
     showSurveyQuestions = () => {
-        if (this.state.surveyQuestions.length === 0) {
+        if (!this.surveyHasQuestions()) {
             return (<div>There's no questions</div>);
         } else {
             return (
-                <ul>
-                    {this.state.surveyQuestions.map((section, key) => {
-                        return(<li key={key}>{section.name}</li>);
+                <Accordion defaultActiveKey="0" style={{marginTop: "10px"}}>
+                    {this.state.survey.survey.map((section, key) => {
+                        return(
+                            <Card key={key}>
+                                <Card.Header>
+                                    <Accordion.Toggle as={Button} variant="link" eventKey={key + 1} >
+                                        {section.name}
+                                    </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey={key + 1}>
+                                    <Card.Body>
+                                        {section.questions.map((question, k2) => {
+                                            return this.formatSurveyQuestion(question, k2);
+                                        })}
+                                    </Card.Body>
+                                </Accordion.Collapse>
+                            </Card>
+                        );
                     })}
-                </ul>
+                </Accordion>
             );
         }
     }
@@ -56,8 +80,8 @@ class Survey extends Component {
                 );
             } else {
                 return (
-                    <div>
-                        <h2>Survey</h2>
+                    <div style={{margin: "10px"}}>
+                        <h2>{this.state.survey.name}</h2>
                         {this.showSurveyQuestions()}
                     </div>
                 )
