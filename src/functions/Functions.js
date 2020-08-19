@@ -1,4 +1,3 @@
-var autenticated = false;
 
 export const saveLoginInformation = (loginInformation, onSuccess, onError) => {
     
@@ -9,7 +8,7 @@ export const saveLoginInformation = (loginInformation, onSuccess, onError) => {
     //.then((response) => {
         onSuccess(surveyId);
     //}).error((error) => {
-    //    onError();
+    //    onError(error);
     //});
 };
 
@@ -19,14 +18,17 @@ export const validateUserToken = (userToken, onSuccess, onError) => {
     var company = {"name": "From the function"};
 
     if (userToken !== null && String(userToken).endsWith('1')) {
-        autenticated = true;
         onSuccess(company);
     } else {
-        autenticated = false;
         onError({'message': 'Error'});
     }
 };
 
-export const isAuthenticated = () => {
-    return autenticated;
+export const getSurveyQuestions = (surveyId, onSuccess, onError) => {
+    //fetch("http://.....")
+    //.then((response) => {
+        onSuccess(surveyId);
+    //}).error((error) => {
+    //    onError(error);
+    //});
 };

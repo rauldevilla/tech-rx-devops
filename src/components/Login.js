@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import { Button } from 'react-bootstrap';
 
-import { ORGANIZATION_ROLES } from './Constants';
+import { ORGANIZATION_ROLES } from '../functions/Constants';
 
 import './Login.css';
 
