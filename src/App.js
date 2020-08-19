@@ -3,10 +3,11 @@ import './App.css';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Landing from './components/Landing';
-import ProtectedRoute from './components/ProtectedRoute';
+//import ProtectedRoute from './components/ProtectedRoute';
 import Survey from './components/Survey';
-import Login from './components/Login';
-import Unauthorized from './components/Unauthorized';
+//import Login from './components/Login';
+//import Unauthorized from './components/Unauthorized';
+import UserSessionContextProvider from './contexts/UserContext';
 
 function App() {
   const [user, setUser] = useState(false);
@@ -45,13 +46,17 @@ function App() {
 
   return (
     <div className="App">
-      <Router>
-        <Route exact path='/' render={props => <Landing {...props}/>}/>
-        <Route exact path='/survey/:id' render={props => <Survey {...props} user={user} />} />
-        <Route exact path='/assessment/:client' render={props => <Login {...props}/>} />
-      </Router>
+      <UserSessionContextProvider>
+        <Router>
+          <Route exact path='/start/:userToken' render={props => <Landing {...props}/>}/>
+          <Route exact path='/survey/:id' render={props => <Survey {...props} user={user} />} />
+        </Router>
+      </UserSessionContextProvider>
     </div>
   );
+
+
+//  <Route exact path='/assessment/:client' render={props => <Login {...props}/>} />
 
 }
 

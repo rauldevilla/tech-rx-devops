@@ -1,22 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, Component } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
 import Container from 'react-bootstrap/Container';
 import Login from './Login';
 import Unauthorized from './Unauthorized';
 
-const Landing = props => {
+import { validateUserToken } from './Functions';
+import { UserSessionContext } from '../contexts/UserContext';
 
-    const [target, setTarget] = useState(props.match.params.target);
-    const [client, setClient] = useState({ 'name': props.match.params.client });
+class Landing extends Component {
 
-    return (
-    <div style={{margin: "10px 10px"}}>
-        <Spinner animation="grow" variant="info" />
-    </div>
-    )
+    static contextType = UserSessionContext;
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            userToken: props.match.params.userToken,
+            client: { name: null }
+        }
+    }
+
+    componentDidMount() {
+
+        validateUserToken(this.state.userToken,
+            (c) => {
+                this.setState({ client: c });
+            },
+            (error) => {
+                console.error(error);
+            });
+
+    }
+
+    isClientReady = () => {
+        return this.state.client !== null && this.state.client.name !== null;
+    }
+
+    render() {
+        const { company } = this.context;
+        console.log('Landing.state', this.state);
+
+        if (this.isClientReady()) {
+            return (
+                <Login client={this.state.client}/>
+            )
+        } else {
+            return (
+                <div style={{ margin: "10px 10px" }}>
+                    <Spinner animation="grow" variant="info" />
+                </div>
+            );
+        }
+    }
 
 };
-
-//return (<Login client={client} history={props.history} handleLogin={props.handleLogin}/>);
 
 export default Landing;

@@ -14,7 +14,7 @@ const Login = props => {
     const [validated, setValidated] = useState(false);
     const [loginInformation, setLoginInformation] = useState({});
 
-    const clientName = props.match.params.client;
+    const clientName = props.client.name;
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
@@ -22,12 +22,9 @@ const Login = props => {
             event.preventDefault();
             event.stopPropagation();
         } else {
-            console.log('pre-validating...');
             var number = Math.floor(Math.random() * 10);
-            console.log('loginInformation', loginInformation);
             saveLoginInformation(number, 
                 () => {
-                    console.log('onSuccess');
                     props.history.push("/survey/123456789");
                 },
                 () => {
