@@ -1,6 +1,5 @@
-import React, { useState, Component } from 'react';
+import React, { Component } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
-import Container from 'react-bootstrap/Container';
 import Login from './Login';
 import Unauthorized from './Unauthorized';
 
@@ -16,7 +15,7 @@ class Landing extends Component {
 
         this.state = {
             userToken: props.match.params.userToken,
-            client: { name: null }
+            unauthorized: false
         }
     }
 
@@ -24,26 +23,30 @@ class Landing extends Component {
 
         validateUserToken(this.state.userToken,
             (c) => {
-                this.setState({ client: c });
+                this.context.setCompany(c);
             },
             (error) => {
                 console.error(error);
+                this.setState({unauthorized: true});
             });
 
     }
 
     isClientReady = () => {
-        return this.state.client !== null && this.state.client.name !== null;
+        const { company } = this.context;
+        console.log('company', company);
+        return company !== null && company.name !== null;
     }
 
     render() {
-        const { company } = this.context;
-        console.log('Landing.state', this.state);
-
         if (this.isClientReady()) {
             return (
                 <Login client={this.state.client}/>
             )
+        } else if (this.state.unauthorized) {
+            return (
+                <Unauthorized/>
+            );
         } else {
             return (
                 <div style={{ margin: "10px 10px" }}>
