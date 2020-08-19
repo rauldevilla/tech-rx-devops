@@ -3,7 +3,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import Login from './Login';
 import Unauthorized from './Unauthorized';
 
-import { validateUserToken } from './Functions';
+import { validateUserToken } from '../functions/Functions';
 import { UserSessionContext } from '../contexts/UserContext';
 
 class Landing extends Component {

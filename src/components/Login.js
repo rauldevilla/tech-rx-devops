@@ -7,7 +7,7 @@ import { ORGANIZATION_ROLES } from './Constants';
 
 import './Login.css';
 
-import { saveLoginInformation } from './Functions';
+import { saveLoginInformation } from '../functions/Functions';
 import { UserSessionContext } from '../contexts/UserContext';
 
 class Login extends Component {
@@ -30,8 +30,8 @@ class Login extends Component {
         } else {
             var number = Math.floor(Math.random() * 10);
             saveLoginInformation(number,
-                () => {
-                    this.props.history.push("/survey/123456789");
+                (surveyId) => {
+                    this.props.history.push("/survey/" + surveyId);
                 },
                 () => {
                     console.log('onError');
@@ -41,19 +41,6 @@ class Login extends Component {
 
         this.setState({validated: true});
     }
-
-    /*const validateSession = () => {
-        var number = Math.floor(Math.random() * 10);
-        console.log('number', number);
-        fetch('http://numbersapi.com/' + number)
-          .then(response => {
-            console.log('response', response);
-            response.text().then((text) => {
-              console.log('body', text);
-              props.history.push("/survey/123456789");
-            });
-          });
-    }*/
 
     handleOnChange = (event) => {
         var info = this.state.loginInformation;
