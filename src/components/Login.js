@@ -33,8 +33,8 @@ class Login extends Component {
                 (surveyId) => {
                     this.props.history.push("/survey/" + surveyId);
                 },
-                () => {
-                    console.log('onError');
+                (error) => {
+                    console.error(error);
                 }
             );
         }

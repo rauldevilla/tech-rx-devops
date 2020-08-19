@@ -34,14 +34,13 @@ class Landing extends Component {
 
     isClientReady = () => {
         const { company } = this.context;
-        console.log('company', company);
         return company !== null && company.name !== null;
     }
 
     render() {
         if (this.isClientReady()) {
             return (
-                <Login client={this.state.client}/>
+                <Login client={this.state.client} {...this.props}/>
             )
         } else if (this.state.unauthorized) {
             return (

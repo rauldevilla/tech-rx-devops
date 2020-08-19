@@ -5,8 +5,6 @@ const Survey = (props) => {
 
     const id = props.match.params.id;
 
-    console.log('id', id);
-
     const isUndefined = (obj) => {
         return obj === undefined;
     }
