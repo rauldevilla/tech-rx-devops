@@ -19,13 +19,13 @@ export const ORGANIZATION_ROLES = [
 
 export const SURVEY_QUESTIONS = [
     {
-        "section-name": "Business",
+        "name": "Business",
         "questions": [
             {
                 "id": "001",
                 "text": "Las áreas de negocio relacionadas con el producto de software son cercanas al equipo de implementación y suelen estár disponibles solucionar de dudas e inquietudes",
-                "answer-type": "single",
-                "answer-options": [
+                "type": "single",
+                "options": [
                     {
                         "value": 1,
                         "text": "No nos comportamos así"
@@ -51,8 +51,8 @@ export const SURVEY_QUESTIONS = [
             {
                 "id": "002",
                 "text": "Dentro de los proyectos de desarrollo de software, las áreas de negocio son representadas por personas con poder de decisión con respecto al producto y/o el proyecto con un grado adecuado de autonomía para no ser cuello de botella.",
-                "answer-type": "single",
-                "answer-options": [
+                "type": "single",
+                "options": [
                     {
                         "value": 1,
                         "text": "No nos comportamos así"
@@ -77,13 +77,13 @@ export const SURVEY_QUESTIONS = [
             }        ]
     },
     {
-        "section-name": "Agile",
+        "name": "Agile",
         "questions": [
             {
                 "id": "003",
                 "text": "Cuando es necesario tomar decisiones que implican la colaboración entre diferentes áreas de la organización, dichas decisiones se toman en corto tiempo privilegiando los objetivos de la organización sobre las particularidades de cada área (Objetivos, Indicadores, Pocisiones de poder, otros)",
-                "answer-type": "single",
-                "answer-options": [
+                "type": "single",
+                "options": [
                     {
                         "value": 1,
                         "text": "No nos comportamos así"

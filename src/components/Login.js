@@ -84,8 +84,8 @@ class Login extends Component {
                             <Form.Label>What is your role in the organization?</Form.Label>
                             <Form.Control id="role" required onChange={this.handleOnChange} as="select">
                                 <option>-- Select --</option>
-                                {ORGANIZATION_ROLES.map((e, key) => {
-                                    return <option key={key}>{e.name}</option>;
+                                {ORGANIZATION_ROLES.map((rol, key) => {
+                                    return <option key={key}>{rol.name}</option>;
                                 })}
                                 <option>Other</option>
                             </Form.Control>

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Unauthorized from './Unauthorized';
 import Spinner from 'react-bootstrap/Spinner';
 
+import { getSurveyQuestions } from '../functions/Functions';
+
 class Survey extends Component {
 
     constructor(props) {
@@ -20,6 +22,30 @@ class Survey extends Component {
         return this.state.surveyQuestions.length === 0;
     }
 
+    componentDidMount = () => {
+        getSurveyQuestions(this.state.surveyId,
+        (questions) => {
+            this.setState({surveyQuestions: questions});
+        },
+        (error) => {
+            console.error(error);
+        })
+    }
+
+    showSurveyQuestions = () => {
+        if (this.state.surveyQuestions.length === 0) {
+            return (<div>There's no questions</div>);
+        } else {
+            return (
+                <ul>
+                    {this.state.surveyQuestions.map((section, key) => {
+                        return(<li key={key}>{section.name}</li>);
+                    })}
+                </ul>
+            );
+        }
+    }
+
     render() {
         if (this.isValidSurveyId()) {
             if (this.isLoadingQuestions()) {
@@ -31,7 +57,8 @@ class Survey extends Component {
             } else {
                 return (
                     <div>
-                        Survey {this.state.surveyId}
+                        <h2>Survey</h2>
+                        {this.showSurveyQuestions()}
                     </div>
                 )
             }

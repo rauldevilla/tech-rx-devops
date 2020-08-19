@@ -1,3 +1,4 @@
+import { SURVEY_QUESTIONS } from './Constants';
 
 export const saveLoginInformation = (loginInformation, onSuccess, onError) => {
     
@@ -24,10 +25,15 @@ export const validateUserToken = (userToken, onSuccess, onError) => {
     }
 };
 
+const delay = (mls) => {
+    setTimeout(() => { console.log("Delay of " + mls + " done.") }, mls);
+}
+
 export const getSurveyQuestions = (surveyId, onSuccess, onError) => {
     //fetch("http://.....")
     //.then((response) => {
-        onSuccess(surveyId);
+        delay(3000);
+        onSuccess(SURVEY_QUESTIONS);
     //}).error((error) => {
     //    onError(error);
     //});
