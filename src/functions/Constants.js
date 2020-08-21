@@ -27,7 +27,7 @@ export const SURVEY =
                 {
                     "id": "001",
                     "text": "Las áreas de negocio relacionadas con el producto de software son cercanas al equipo de implementación y suelen estár disponibles solucionar de dudas e inquietudes",
-                    "type": "single",
+                    "type": "checkbox",
                     "options": [
                         {
                             "value": 1,
@@ -54,7 +54,7 @@ export const SURVEY =
                 {
                     "id": "002",
                     "text": "Dentro de los proyectos de desarrollo de software, las áreas de negocio son representadas por personas con poder de decisión con respecto al producto y/o el proyecto con un grado adecuado de autonomía para no ser cuello de botella.",
-                    "type": "single",
+                    "type": "radio",
                     "options": [
                         {
                             "value": 1,
@@ -85,7 +85,7 @@ export const SURVEY =
                 {
                     "id": "003",
                     "text": "Cuando es necesario tomar decisiones que implican la colaboración entre diferentes áreas de la organización, dichas decisiones se toman en corto tiempo privilegiando los objetivos de la organización sobre las particularidades de cada área (Objetivos, Indicadores, Pocisiones de poder, otros)",
-                    "type": "single",
+                    "type": "checkbox",
                     "options": [
                         {
                             "value": 1,
@@ -112,7 +112,7 @@ export const SURVEY =
                 {
                     "id": "004",
                     "text": "El estado de avance de los proyectos de tecnología se mide considerando principalmente la cantidad de resultados que han sido generados y que entregan valor para su público objetivo.  Es decir, el porcentaje de avance no se basa en diagramas de gant sino en los entregables que ya están generando valor.",
-                    "answer": "single",
+                    "type": "radio",
                     "options": [
                         {
                             "value": 1,

@@ -39,25 +39,16 @@ class Survey extends Component {
         return this.state.survey.survey !== undefined && this.state.survey.survey.length > 0;
     }
 
-    formatSurveyAnswers = (optAnswersArray) => {
-        var groupName = "g_a_" + (this.groupId++);
-        return (
-            <div style={{marginLeft: "10px"}}>
-            {optAnswersArray.map((a, key) => {
-                    return (<Form.Check key={key} name={groupName} type="radio" label={a.text} value={a.value}/>);
-                })}
-            </div>
-        )
+    surveyQuestionAnswerOnChangeHandler = (event) => {
+
     }
 
-    formatSurveyQuestion = (question, key) => {
+    formatSurveyQuestion = (question, bottomBorder, key) => {
         return (
-            <section key={key} >
-                <div style={{marginBottom: "10px", padding: "10px"}}>
-                    {(key + 1)  + ". " + question.text}
-                </div>
-                {this.formatSurveyAnswers(question.options)}
-            </section>);
+            <div key={key}>
+                <Question data={question} order={key + 1} borderBottom={bottomBorder} />
+            </div>
+        );
     }
 
     showSurveyQuestions = () => {
@@ -77,7 +68,7 @@ class Survey extends Component {
                                 <Accordion.Collapse eventKey={key + 1}>
                                     <Card.Body>
                                         {section.questions.map((question, k2) => {
-                                            return this.formatSurveyQuestion(question, k2);
+                                            return this.formatSurveyQuestion(question, (k2 + 1 !== section.questions.length), k2);
                                         })}
                                     </Card.Body>
                                 </Accordion.Collapse>
@@ -102,6 +93,9 @@ class Survey extends Component {
                     <div style={{margin: "10px"}}>
                         <h2>{this.state.survey.name}</h2>
                         {this.showSurveyQuestions()}
+                        <div style={{marginTop: "30px"}}>
+                            <Button type="submit" variant="info">Send answers</Button>
+                        </div>
                     </div>
                 )
             }
@@ -110,6 +104,69 @@ class Survey extends Component {
                 <Unauthorized/>
             );
         }
+    }
+}
+
+class Question extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            selectedAnswers: []
+        }
+    }
+
+    answerChangeHandler = (event, data) => {
+        var answer = event.currentTarget;
+
+        if (this.props.data.type === 'checkbox') {
+            var newSelection = null;
+            if (answer.checked) {
+                newSelection = this.state.selectedAnswers.slice();
+                newSelection.push(data);
+            } else {
+                newSelection = this.state.selectedAnswers.filter((e, index, arr) => e.value !== data.value);
+            }
+            this.setState({selectedAnswers: newSelection});
+
+        } else {
+            this.setState({selectedAnswers: [data]});
+        }
+    }
+
+    showAnwers = () => {
+        const answerDivStyle = {marginLeft: "10px", paddingBottom: "15px"};
+        var groupName = this.props.data.id;
+        return (
+            <div style={answerDivStyle}>
+            {this.props.data.options.map((a, key) => {
+                return (<Answer key={key} group={groupName} data={a} type={this.props.data.type} onChange={this.answerChangeHandler}/>);
+            })}
+            </div>
+        )
+    }
+
+    render() {
+        const sectionStyle = {borderBottom: (this.props.bottomBorder ? "1px solid #ddd" : "")};
+        const textStyle = {marginBottom: "10px", padding: "10px"};
+        return (
+            <section key={this.props.key} style={sectionStyle}>
+                <div style={textStyle}>
+                    {this.props.order  + ". " + this.props.data.text}
+                </div>
+                {this.showAnwers()}
+            </section>
+        );
+    }
+
+}
+
+class Answer extends Component {
+
+    render() {
+        return (
+            <Form.Check name={this.props.group} type={this.props.type} label={this.props.data.text} value={this.props.data.value} onChange={(event) => this.props.onChange(event, this.props.data)}/>
+        );
     }
 }
 
