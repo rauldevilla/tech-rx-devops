@@ -20,7 +20,7 @@ export const ORGANIZATION_ROLES = [
 export const SURVEY =
 {
     "name": "DevOps Assessment",
-    "survey": [
+    "sections": [
         {
             "name": "Business",
             "questions": [

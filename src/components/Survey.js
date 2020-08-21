@@ -11,7 +11,7 @@ class Survey extends Component {
         super(props);
         this.state = {
             surveyId: props.match.params.id,
-            survey: {}
+            survey: null
         }
     }
 
@@ -22,7 +22,7 @@ class Survey extends Component {
     }
 
     isLoadingQuestions = () => {
-        return this.state.survey.survey === undefined;
+        return this.state.survey === null;
     }
 
     componentDidMount = () => {
@@ -36,17 +36,19 @@ class Survey extends Component {
     }
 
     surveyHasQuestions = () => {
-        return this.state.survey.survey !== undefined && this.state.survey.survey.length > 0;
+        return this.state.survey.sections !== undefined && this.state.survey.sections.length > 0;
     }
 
-    surveyQuestionAnswerOnChangeHandler = (event) => {
-
+    updateSurvey = (question) => {
     }
 
-    formatSurveyQuestion = (question, bottomBorder, key) => {
+    surveyQuestionOnChangeHandler = (question) => {
+    }
+
+    formatSurveyQuestion = (sectionName, question, borderBottom, key) => {
         return (
             <div key={key}>
-                <Question data={question} order={key + 1} borderBottom={bottomBorder} />
+                <Question data={question} sectionName={sectionName} order={key + 1} borderBottom={borderBottom} onChange={this.surveyQuestionOnChangeHandler}/>
             </div>
         );
     }
@@ -57,7 +59,7 @@ class Survey extends Component {
         } else {
             return (
                 <Accordion defaultActiveKey="0" style={{marginTop: "10px"}}>
-                    {this.state.survey.survey.map((section, key) => {
+                    {this.state.survey.sections.map((section, key) => {
                         return(
                             <Card key={key}>
                                 <Card.Header>
@@ -68,7 +70,7 @@ class Survey extends Component {
                                 <Accordion.Collapse eventKey={key + 1}>
                                     <Card.Body>
                                         {section.questions.map((question, k2) => {
-                                            return this.formatSurveyQuestion(question, (k2 + 1 !== section.questions.length), k2);
+                                            return this.formatSurveyQuestion(section.name, question, (k2 + 1 !== section.questions.length), k2);
                                         })}
                                     </Card.Body>
                                 </Accordion.Collapse>
@@ -78,6 +80,10 @@ class Survey extends Component {
                 </Accordion>
             );
         }
+    }
+
+    sendAnswersClickHandler = (event) => {
+        console.log('send anwers', this.state.survey);
     }
 
     render() {
@@ -94,7 +100,7 @@ class Survey extends Component {
                         <h2>{this.state.survey.name}</h2>
                         {this.showSurveyQuestions()}
                         <div style={{marginTop: "30px"}}>
-                            <Button type="submit" variant="info">Send answers</Button>
+                            <Button type="submit" variant="info" onClick={this.sendAnswersClickHandler}>Send answers</Button>
                         </div>
                     </div>
                 )
@@ -114,24 +120,28 @@ class Question extends Component {
         this.state = {
             selectedAnswers: []
         }
+        this.props.data.sectionName = this.props.sectionName;
     }
 
     answerChangeHandler = (event, data) => {
         var answer = event.currentTarget;
+        var newSelection = null;
 
         if (this.props.data.type === 'checkbox') {
-            var newSelection = null;
             if (answer.checked) {
                 newSelection = this.state.selectedAnswers.slice();
                 newSelection.push(data);
             } else {
                 newSelection = this.state.selectedAnswers.filter((e, index, arr) => e.value !== data.value);
             }
-            this.setState({selectedAnswers: newSelection});
 
         } else {
-            this.setState({selectedAnswers: [data]});
+            newSelection = [data];
         }
+
+        this.setState({selectedAnswers: newSelection});
+        this.props.data.answers = newSelection;
+        this.props.onChange(this.props.data);
     }
 
     showAnwers = () => {
@@ -147,7 +157,7 @@ class Question extends Component {
     }
 
     render() {
-        const sectionStyle = {borderBottom: (this.props.bottomBorder ? "1px solid #ddd" : "")};
+        const sectionStyle = {borderBottom: (this.props.borderBottom ? "1px solid #ddd" : "")};
         const textStyle = {marginBottom: "10px", padding: "10px"};
         return (
             <section key={this.props.key} style={sectionStyle}>
