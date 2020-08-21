@@ -25,16 +25,24 @@ export const validateUserToken = (userToken, onSuccess, onError) => {
     }
 };
 
-const delay = (mls) => {
-    setTimeout(() => { console.log("Delay of " + mls + " done.") }, mls);
+const getRandomInteger = (min, max) => {
+    return Math.floor(Math.random() * max) + min;
 }
 
 export const getSurveyQuestions = (surveyId, onSuccess, onError) => {
     //fetch("http://.....")
     //.then((response) => {
-        delay(3000);
-        onSuccess(SURVEY);
+        setTimeout(() => { onSuccess(SURVEY) }, getRandomInteger(1, 3) * 1000);
     //}).error((error) => {
     //    onError(error);
     //});
 };
+
+export const saveSurveyAnswers = (Survey, onSuccess, onError) => {
+    //fetch("http://.....")
+    //.then((response) => {
+        setTimeout(() => { onSuccess() }, getRandomInteger(1, 3) * 1000);
+    //}).error((error) => {
+    //    onError(error);
+    //});
+}

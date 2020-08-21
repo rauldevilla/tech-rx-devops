@@ -3,6 +3,7 @@ import Unauthorized from './Unauthorized';
 import Spinner from 'react-bootstrap/Spinner';
 
 import { getSurveyQuestions } from '../functions/Functions';
+import { saveSurveyAnswers } from '../functions/Functions';
 import { Card, Accordion, Button, Form } from 'react-bootstrap';
 
 class Survey extends Component {
@@ -11,7 +12,8 @@ class Survey extends Component {
         super(props);
         this.state = {
             surveyId: props.match.params.id,
-            survey: null
+            survey: null,
+            isSaving: false
         }
     }
 
@@ -37,9 +39,6 @@ class Survey extends Component {
 
     surveyHasQuestions = () => {
         return this.state.survey.sections !== undefined && this.state.survey.sections.length > 0;
-    }
-
-    updateSurvey = (question) => {
     }
 
     surveyQuestionOnChangeHandler = (question) => {
@@ -83,7 +82,16 @@ class Survey extends Component {
     }
 
     sendAnswersClickHandler = (event) => {
-        console.log('send anwers', this.state.survey);
+        this.setState({isSaving: true});
+        saveSurveyAnswers(this.state.Survey,
+            () => {
+                this.setState({isSaving: false});
+            },
+            (error) => {
+                console.error('Saving survey', error);
+                this.setState({isSaving: false});
+            }
+        );
     }
 
     render() {
@@ -100,7 +108,12 @@ class Survey extends Component {
                         <h2>{this.state.survey.name}</h2>
                         {this.showSurveyQuestions()}
                         <div style={{marginTop: "30px"}}>
-                            <Button type="submit" variant="info" onClick={this.sendAnswersClickHandler}>Send answers</Button>
+                            <div style={{float: "left"}}>
+                                <Button type="submit" disabled={this.state.isSaving} variant="info" onClick={this.sendAnswersClickHandler}>Send answers</Button>
+                            </div>
+                            <div style={{float: "left", marginLeft: "10px", marginTop: "3px", display: (this.state.isSaving ? "block" : "none")}}>
+                                <Spinner animation="grow" variant="info" />
+                            </div>
                         </div>
                     </div>
                 )
