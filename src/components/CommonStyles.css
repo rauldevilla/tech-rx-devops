@@ -1,0 +1,13 @@
+.client-name {
+    color: #e82378;
+}
+
+.confirmation-message {
+    color: #00a6bb;
+}
+
+.spinner-for-button {
+    float: left;
+    margin-left: 10px;
+    margin-top: 3px;
+}

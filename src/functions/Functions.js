@@ -46,3 +46,26 @@ export const saveSurveyAnswers = (Survey, onSuccess, onError) => {
     //    onError(error);
     //});
 }
+
+export const getSurveyInformation = (surveyId, onSuccess, onError) => {
+    //fetch("http://.....")
+    //.then((response) => {
+        console.log('---->surveyId', surveyId);
+        if (surveyId !== null && String(surveyId).endsWith('9')) {
+            setTimeout(() => { onSuccess({name: "DevOps Assessment"}) }, getRandomInteger(1, 3) * 1000);
+        } else {
+            onError("plop !");
+        }
+    //}).error((error) => {
+    //    onError(error);
+    //});
+}
+
+export const doCheckedIn = (checkInInformation, onSuccess, onError) => {
+    //fetch("http://.....")
+    //.then((response) => {
+        setTimeout(() => { onSuccess() }, getRandomInteger(1, 3) * 1000);
+    //}).error((error) => {
+    //    onError(error);
+    //});
+}

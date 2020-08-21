@@ -6,6 +6,8 @@ import { getSurveyQuestions } from '../functions/Functions';
 import { saveSurveyAnswers } from '../functions/Functions';
 import { Card, Accordion, Button, Form } from 'react-bootstrap';
 
+import './CommonStyles.css';
+
 class Survey extends Component {
 
     constructor(props) {
@@ -111,7 +113,7 @@ class Survey extends Component {
                             <div style={{float: "left"}}>
                                 <Button type="submit" disabled={this.state.isSaving} variant="info" onClick={this.sendAnswersClickHandler}>Send answers</Button>
                             </div>
-                            <div style={{float: "left", marginLeft: "10px", marginTop: "3px", display: (this.state.isSaving ? "block" : "none")}}>
+                            <div className="spinner-for-button" style={{display: (this.state.isSaving ? "block" : "none")}}>
                                 <Spinner animation="grow" variant="info" />
                             </div>
                         </div>

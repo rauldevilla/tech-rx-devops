@@ -5,7 +5,7 @@ import { Button } from 'react-bootstrap';
 
 import { ORGANIZATION_ROLES } from '../functions/Constants';
 
-import './Login.css';
+import './CommonStyles.css';
 
 import { saveLoginInformation } from '../functions/Functions';
 import { UserSessionContext } from '../contexts/UserContext';
