@@ -3,7 +3,7 @@ import Unauthorized from './Unauthorized';
 import Spinner from 'react-bootstrap/Spinner';
 
 import { getSurveyQuestions } from '../functions/Functions';
-import { Card, Accordion, Button } from 'react-bootstrap';
+import { Card, Accordion, Button, Form } from 'react-bootstrap';
 
 class Survey extends Component {
 
@@ -14,6 +14,8 @@ class Survey extends Component {
             survey: {}
         }
     }
+
+    groupId = 0;
 
     isValidSurveyId = () => {
         return this.state.surveyId !== null && this.state.surveyId !==  undefined;
@@ -37,8 +39,25 @@ class Survey extends Component {
         return this.state.survey.survey !== undefined && this.state.survey.survey.length > 0;
     }
 
+    formatSurveyAnswers = (optAnswersArray) => {
+        var groupName = "g_a_" + (this.groupId++);
+        return (
+            <div style={{marginLeft: "10px"}}>
+            {optAnswersArray.map((a, key) => {
+                    return (<Form.Check key={key} name={groupName} type="radio" label={a.text} value={a.value}/>);
+                })}
+            </div>
+        )
+    }
+
     formatSurveyQuestion = (question, key) => {
-        return <div style={{background: (key % 2 === 0 ? "#f5fffe" : ""), marginBottom: "10px", padding: "10px"}}>{question.text}</div>;
+        return (
+            <section key={key} >
+                <div style={{marginBottom: "10px", padding: "10px"}}>
+                    {(key + 1)  + ". " + question.text}
+                </div>
+                {this.formatSurveyAnswers(question.options)}
+            </section>);
     }
 
     showSurveyQuestions = () => {

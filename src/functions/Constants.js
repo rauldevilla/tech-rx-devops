@@ -112,8 +112,8 @@ export const SURVEY =
                 {
                     "id": "004",
                     "text": "El estado de avance de los proyectos de tecnología se mide considerando principalmente la cantidad de resultados que han sido generados y que entregan valor para su público objetivo.  Es decir, el porcentaje de avance no se basa en diagramas de gant sino en los entregables que ya están generando valor.",
-                    "answer-type": "single",
-                    "answer-options": [
+                    "answer": "single",
+                    "options": [
                         {
                             "value": 1,
                             "text": "No nos comportamos así"
