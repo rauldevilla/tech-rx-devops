@@ -1,4 +1,5 @@
 import { SURVEY } from './Constants';
+import { SURVEY_API_BASE_URL } from './Constants';
 
 export const saveLoginInformation = (loginInformation, onSuccess, onError) => {
     
@@ -14,6 +15,16 @@ export const saveLoginInformation = (loginInformation, onSuccess, onError) => {
 };
 
 export const validateUserToken = (userToken, onSuccess, onError) => {
+
+    fetch('https://hn8k8j5ui0.execute-api.us-east-1.amazonaws.com/prod/rxsurvey-validatesurveytoken',
+    {
+        "method": "post",
+        "headers": {
+            
+        }
+    }
+    )
+
 
     //TODO: Send information to server
     var company = {"name": "From the function"};
@@ -48,17 +59,14 @@ export const saveSurveyAnswers = (Survey, onSuccess, onError) => {
 }
 
 export const getSurveyInformation = (surveyId, onSuccess, onError) => {
-    //fetch("http://.....")
-    //.then((response) => {
-        console.log('---->surveyId', surveyId);
-        if (surveyId !== null && String(surveyId).endsWith('9')) {
-            setTimeout(() => { onSuccess({name: "DevOps Assessment"}) }, getRandomInteger(1, 3) * 1000);
-        } else {
-            onError("plop !");
-        }
-    //}).error((error) => {
-    //    onError(error);
-    //});
+    fetch(SURVEY_API_BASE_URL + "/checksurvey/" + surveyId, {method: 'GET'})
+        .then(response => response.json())
+        .then((survey) => {
+            console.log('survey', survey);
+            onSuccess(survey);
+        }).catch((error) => {
+            onError(error);
+        });
 }
 
 export const doCheckedIn = (checkInInformation, onSuccess, onError) => {

@@ -1,3 +1,5 @@
+export const SURVEY_API_BASE_URL = "https://msw8uqbihb.execute-api.us-east-1.amazonaws.com/prod"
+
 export const ORGANIZATION_ROLES = [
     { "name": "Business Directive" },
     { "name": "Business Sponsor" },

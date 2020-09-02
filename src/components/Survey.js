@@ -100,7 +100,7 @@ class Survey extends Component {
         if (this.isValidSurveyId()) {
             if (this.isLoadingQuestions()) {
                 return (
-                    <div style={{ margin: "10px 10px" }}>
+                    <div className="spinner-panel">
                         <Spinner animation="grow" variant="info" />
                     </div>
                 );

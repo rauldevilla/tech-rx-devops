@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { Container } from 'react-bootstrap';
+import { Alert } from 'react-bootstrap';
 
 class ErrorScreen extends Component {
     render() {
         return (
             <div>
-                <Container>
-                    <h5>{this.props.message}</h5>
-                </Container>
+                <Alert variant='danger'>
+                <Alert.Heading>{this.props.title}</Alert.Heading>
+                    <p>{this.props.message}</p>
+                </Alert>
             </div>
         );
     }

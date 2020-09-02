@@ -70,7 +70,7 @@ class Checkin extends Component {
         if (this.state.showError) {
             return (
                 <div>
-                    <ErrorScreen message="Something went wrong" />
+                    <ErrorScreen title="Ups !" message="Something went wrong" />
                 </div>
             );
         } else if (this.state.checkedIn) {
