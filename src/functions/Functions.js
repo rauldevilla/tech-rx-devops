@@ -1,5 +1,5 @@
 import { SURVEY } from './Constants';
-import { SURVEY_API_BASE_URL } from './Constants';
+import { Constants } from './Constants';
 
 export const saveLoginInformation = (loginInformation, onSuccess, onError) => {
     
@@ -59,7 +59,7 @@ export const saveSurveyAnswers = (Survey, onSuccess, onError) => {
 }
 
 export const getSurveyInformation = (surveyId, onSuccess, onError) => {
-    fetch(SURVEY_API_BASE_URL + "/checksurvey/" + surveyId, {method: 'GET'})
+    fetch(Constants.SURVEY_API_BASE_URL + "/vt/" + surveyId, {method: 'GET'})
         .then(response => response.json())
         .then((survey) => {
             console.log('survey', survey);
