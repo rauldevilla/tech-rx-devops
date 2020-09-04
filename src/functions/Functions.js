@@ -1,6 +1,8 @@
 import { SURVEY } from './Constants';
 import { Constants } from './Constants';
 
+import axios from 'axios';
+
 export const saveLoginInformation = (loginInformation, onSuccess, onError) => {
     
     //TODO: Send information to server an save
@@ -59,14 +61,14 @@ export const saveSurveyAnswers = (Survey, onSuccess, onError) => {
 }
 
 export const getSurveyInformation = (surveyId, onSuccess, onError) => {
-    fetch(Constants.SURVEY_API_BASE_URL + "/vt/" + surveyId, {method: 'GET'})
-        .then(response => response.json())
-        .then((survey) => {
-            console.log('survey', survey);
-            onSuccess(survey);
+
+    axios.get(Constants.SURVEY_API_BASE_URL + "/vt/" + surveyId)
+        .then((response) => {
+            onSuccess(response.data)
         }).catch((error) => {
             onError(error);
         });
+
 }
 
 export const doCheckedIn = (checkInInformation, onSuccess, onError) => {
